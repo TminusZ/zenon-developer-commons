@@ -4,6 +4,8 @@ A public, community-driven space for exploring and documenting the technical arc
 
 This repository serves as:
 
+a space for ongoing research into whether Zenon’s architecture can support a browser-native, proof-verified light client using technologies like WebRTC and libp2p.
+
 a neutral hub for engineering research
 
 a place to organize architecture insights
