@@ -5,7 +5,7 @@ Research Draft — Not a Formal Specification
 These notes describe how Pillars function inside Zenon’s dual-ledger architecture, how they finalize ordering, and how they interact with Sentries and Sentinels.
 They are intended for researchers exploring browser-native verification, proof-first consensus, and lightweight execution models.
 
-⸻
+
 
 1. Purpose of Pillars
 
@@ -24,7 +24,7 @@ Pillars are the consensus layer in Zenon. They:
 Unlike traditional validators, they do not execute user application logic or run a global VM.
 Their role is strictly ordering + finality.
 
-⸻
+
 
 2. What a Pillar Actually Does
 
@@ -54,7 +54,7 @@ Pillars do not handle:
 
 Their job is to maintain global ordering efficiently.
 
-⸻
+
 
 3. Why Pillars Work in a Dual-Ledger Architecture
 
@@ -79,7 +79,7 @@ Instead, they:
 Pillars commit the result, not the process.
 This keeps Momentum production lightweight.
 
-⸻
+
 
 4. Momentum Block Construction
 
@@ -107,7 +107,7 @@ A Momentum does not contain:
 
 Momentum blocks are commitments, not execution logs.
 
-⸻
+
 
 5. Consensus Flow (Simplified)
 
@@ -133,7 +133,7 @@ No mempool market.
 
 No bidding for inclusion.
 
-⸻
+
 
 6. Pillars vs. Sentinels vs. Sentries
 
@@ -169,7 +169,7 @@ Pillar
 
 This separation enables a feeless architecture without central bottlenecks.
 
-⸻
+
 
 7. Why Pillars Enable Browser-Native Verification
 
@@ -189,7 +189,7 @@ No Merkle-proof complexity.
 
 This aligns naturally with SPV and browser-native clients.
 
-⸻
+
 
 8. Pillars and Future Extensions
 
@@ -209,7 +209,7 @@ Active research directions include:
 
 Pillars are the backbone of deterministic ordering in Zenon.
 
-⸻
+
 
 9. Open Questions
 
