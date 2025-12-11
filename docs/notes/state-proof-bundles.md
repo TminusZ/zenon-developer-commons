@@ -2,8 +2,6 @@ State Proof Bundles: A Minimal Verification Primitive for Dual-Ledger Blockchain
 
 Research Draft — Exploratory and Non-Normative
 
-⸻
-
 1. Motivation
 
 In dual-ledger architectures such as Zenon’s account-chain + Momentum model:
@@ -18,7 +16,6 @@ Dual-ledger systems require a different primitive—one based on local determini
 
 State proof bundles are proposed as such a primitive.
 
-⸻
 
 2. Structure of a State Proof Bundle
 
@@ -44,7 +41,6 @@ Bundles explicitly exclude:
 
 Each bundle is scoped to a single account-chain frontier.
 
-⸻
 
 3. Why Bundles Work Without Merkle Trees
 
@@ -86,7 +82,6 @@ A browser or minimal runtime verifies the system in five steps:
 
 This workflow enables securely synchronized light clients without global state or heavy computation.
 
-⸻
 
 5. Interaction With zApps
 
@@ -104,7 +99,6 @@ This allows:
 
 Bundles act as the proof boundary between local execution and global settlement.
 
-⸻
 
 6. SPV, Cross-Chain Work, and Interoperability
 
@@ -134,7 +128,6 @@ Bundles can be embedded into Momentum Data for:
 
 This enables general-purpose bridging without full-state proofs.
 
-⸻
 
 7. Open Research Questions
 	•	What is the minimal canonical bundle schema?
@@ -146,7 +139,6 @@ This enables general-purpose bridging without full-state proofs.
 
 These questions define the research surface for future contributors.
 
-⸻
 
 8. Summary
 
