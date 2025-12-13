@@ -15,7 +15,7 @@ It holds:
 Instead, the browser performs local verification of compact proof bundles produced by Supervisors and anchored by Sentinels.
 This enables trustless participation without RPC servers or centralized gateways.
 
-The browser becomes a peer—not a full node—but a cryptographically independent verifier.
+The browser becomes a peer, not a full node, but a cryptographically independent verifier.
 
 ## 2. Operating Constraints
 
