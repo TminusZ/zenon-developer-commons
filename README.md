@@ -10,6 +10,10 @@ architecture of **Zenon — The Network of Momentum (NoM)**.
 [![Light Client](https://img.shields.io/badge/Topic-Browser--Light--Client-orange)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey.svg)]()
 
+***The full, structured Zenon architecture documentation is available here:
+👉 https://zenon-developer-commons.gitbook.io/zenon-developer-commons-docs
+
+
 This repository serves as:
 
 - a space for ongoing research into whether Zenon’s architecture can support a
