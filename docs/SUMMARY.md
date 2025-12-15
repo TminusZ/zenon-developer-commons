@@ -25,7 +25,7 @@
 
 ## Research
 - [Research Index](research/README.md)
-- [Bitcoin SPV on Zenon — Research Blueprint](research/bitcoin_spv_zenon_research.pdf)
+- [Bitcoin SPV on Zenon — Research Blueprint](research/bitcoin-spv-research-blueprint.md)
 
 ## Proposals
 - [Proposals Index](proposals/README.md)
