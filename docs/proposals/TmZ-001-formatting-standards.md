@@ -126,14 +126,14 @@ More content.
 
 Use fenced code blocks with language hints:
 
-```markdown
+````markdown
 ```go
 type Momentum struct {
     Height uint64
     Hash   [32]byte
 }
 ```
-```
+````
 
 For inline code, use backticks: `ChangesHash`, `AccountBlock`.
 
