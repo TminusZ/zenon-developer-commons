@@ -2,8 +2,7 @@
 
 Research Draft — Not a Formal Specification
 
-These notes describe how Pillars function inside Zenon's dual-ledger architecture, how they finalize ordering, and how they interact with Sentries and Sentinels.
-They are intended for researchers exploring browser-native verification, proof-first consensus, and lightweight execution models.
+These notes describe how Pillars function inside Zenon's dual-ledger architecture, how they finalize ordering, and how they interact with Sentries and Sentinels. They are intended for researchers exploring browser-native verification, proof-first consensus, and lightweight execution models.
 
 ## 1. Purpose of Pillars
 

@@ -15,10 +15,14 @@ These are exploratory research documents, not protocol specifications.
 ## Core Architecture
 
 - [Browser Light Client Architecture](browser-light-client-architecture.md)
+- [Browser Light Client](browser-light-client.md)
 - [Account Chain Commitments](account-chain-commitments.md)
 - [Momentum Header Verification](momentum-header-verification.md)
+- [Momentum Data Fields](momentum-data-fields.md)
 - [Pillars](pillars.md)
 - [Supervisor Layer](supervisor-layer.md)
+- [Minimal Sentry Node](minimal-sentry-node.md)
+- [zApps Draft Notes](zapps-draft-notes.md)
 
 ---
 
@@ -27,6 +31,8 @@ These are exploratory research documents, not protocol specifications.
 - [State Proof Bundles](state-proof-bundles.md)
 - [Sentinel Finalization Layer](sentinel-finalization-layer.md)
 - [Sentinel Middle Layer](sentinel-middle-layer.md)
+- [SPV Light Verification](spv-light-verification.md)
+- [Bitcoin SPV Feasibility](bitcoin-spv-feasibility.md)
 
 ---
 

@@ -1,10 +1,10 @@
 # Sentinel Finalization Layer
 
-Research Notes on Proof Anchoring in a Dual-Ledger Architecture
+Research Note — Proof Anchoring in a Dual-Ledger Architecture
 
-Status: Exploratory research note
-Scope: Interpretation of documented Sentinel behavior and its role in a dual-ledger system
-Note: This document distinguishes between documented behavior and inferred architectural roles. It is not a specification.
+This document explores the Sentinel role as a verification and anchoring layer between account-level activity and Momentum-level ordering. It distinguishes between documented behavior and inferred architectural roles. This is exploratory research, not a specification.
+
+---
 
 ## 1. Introduction
 

@@ -2,8 +2,7 @@
 
 These notes outline how Sentinels fit into Zenon's architecture as the deterministic verification and relay layer between lightweight Sentries and consensus-producing Pillars.
 
-This is not a formal specification.
-It is an architectural framing for researchers investigating light-node design, SPV patterns, and browser-native execution.
+This is not a formal specification. It is an architectural framing for researchers investigating light-node design, SPV patterns, and browser-native execution.
 
 ---
 

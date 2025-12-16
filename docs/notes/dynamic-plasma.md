@@ -1,8 +1,6 @@
 # Dynamic Plasma: Adaptive Resource Scaling (Draft)
 
-Dynamic Plasma (DP) refers to an adaptive mechanism for regulating resource consumption in Zenon's dual-ledger architecture.
-This draft outlines why a static plasma model is insufficient, how adaptive scaling could operate, and how it interacts with account-chains, zApps, and future protocol extensions.
-It is a research framing, not a finalized specification.
+Dynamic Plasma (DP) refers to an adaptive mechanism for regulating resource consumption in Zenon's dual-ledger architecture. This draft outlines why a static plasma model is insufficient, how adaptive scaling could operate, and how it interacts with account-chains, zApps, and future protocol extensions. It is a research framing, not a finalized specification.
 
 ## 1. Purpose of Dynamic Plasma
 

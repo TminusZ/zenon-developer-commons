@@ -1,7 +1,6 @@
 # SPV for Zenon (Draft Notes)
 
-These are early notes on what a minimal SPV-style verification model for Zenon might look like.
-This is not a proposal or spec — just an outline for exploring how SPV fits into the dual-ledger architecture.
+These are early notes on what a minimal SPV-style verification model for Zenon might look like. This is not a proposal or spec — just an outline for exploring how SPV fits into the dual-ledger architecture.
 
 ## Why SPV matters in this context
 
