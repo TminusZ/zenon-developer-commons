@@ -22,6 +22,7 @@ This is a research-only funding request.
 - **Title:** Bounded Verification Research
 - **Proposal ID:** be968c…22f5f2 (full ID on-chain via Syrius AZ)
 - **Status:** Voting open
+- **View on ZenonHub:** [Accelerator-Z Proposal](https://zenonhub.io/accelerator-z/project/be968cd5ffc72ef40bb40431ceac8257467cba86b28c8e022aec152ca222f5f2)
 
 ## Verification
 

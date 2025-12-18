@@ -44,3 +44,4 @@
 ## Proposals
 - [Proposals Index](proposals/README.md)
 - [TmZ-001: Documentation Formatting Standards](proposals/TmZ-001-formatting-standards.md)
+- [AZ Research Proposal (On-Chain)](az/README.md)
