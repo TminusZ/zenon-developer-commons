@@ -12,45 +12,58 @@ These are exploratory research documents, not protocol specifications.
 
 ---
 
-## Core Architecture
+## Node Architecture
 
-- [Browser Light Client Architecture](browser-light-client-architecture.md)
-- [Browser Light Client](browser-light-client.md)
-- [Account Chain Commitments](account-chain-commitments.md)
-- [Momentum Header Verification](momentum-header-verification.md)
-- [Momentum Data Fields](momentum-data-fields.md)
-- [Pillars](pillars.md)
-- [Supervisor Layer](supervisor-layer.md)
+The node hierarchy from consensus to execution.
+
 - [Minimal Sentry Node](minimal-sentry-node.md)
-- [zApps Draft Notes](zapps-draft-notes.md)
-
----
-
-## Verification & Proof Systems
-
-- [State Proof Bundles](state-proof-bundles.md)
-- [Sentinel Finalization Layer](sentinel-finalization-layer.md)
+- [Minimal Sentry Node (Extended)](minimal-sentry-node/)
+- [Supervisor Layer](supervisor-layer.md)
 - [Sentinel Middle Layer](sentinel-middle-layer.md)
-- [SPV Light Verification](spv-light-verification.md)
-- [Bitcoin SPV Feasibility](bitcoin-spv-feasibility.md)
-- [HTLCs, PTLCs, and Bounded Inclusion](htlc_ptlc_and_bounded_inclusion_comparison.md)
+- [Sentinel Finalization Layer](sentinel-finalization-layer.md)
+- [Pillars](pillars.md)
 
 ---
 
-## Resource & Economics
+## Light Clients & Verification
 
+Header verification, SPV-style proofs, and browser-native clients.
+
+- [Momentum Header Verification](momentum-header-verification.md)
+- [SPV Light Verification](spv-light-verification.md)
+- [SPV Light Verification (Extended)](spv-light-verification/)
+- [State Proof Bundles](state-proof-bundles.md)
+- [Browser Light Client](browser-light-client.md)
+- [Browser Light Client Architecture](browser-light-client-architecture.md)
+- [Browser Light Client (Extended)](browser-light-client/)
+
+---
+
+## Data Structures & Commitments
+
+How data is committed and structured in the dual-ledger model.
+
+- [Account Chain Commitments](account-chain-commitments.md)
+- [Momentum Data Fields](momentum-data-fields.md)
+
+---
+
+## Execution Model
+
+zApps, resource management, and local execution.
+
+- [zApps Draft Notes](zapps-draft-notes.md)
+- [zApps Draft Notes (Extended)](zapps-draft-notes/)
 - [Dynamic Plasma](dynamic-plasma.md)
 
 ---
 
-## Extended Drafts & Subdirectories
+## Interoperability
 
-The following folders contain multi-part or deeper draft notes.
+Cross-chain verification and bridging.
 
-- [Browser Light Client (extended drafts)](browser-light-client/)
-- [Minimal Sentry Node](minimal-sentry-node/)
-- [SPV Light Verification](spv-light-verification/)
-- [zApps Draft Notes](zapps-draft-notes/)
+- [Bitcoin SPV Feasibility](bitcoin-spv-feasibility.md)
+- [HTLCs, PTLCs, and Bounded Inclusion](htlc_ptlc_and_bounded_inclusion_comparison.md)
 
 ---
 
