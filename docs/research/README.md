@@ -40,6 +40,23 @@ A structured research series exploring verification primitives for the Zenon Net
 
 ---
 
+## DID & Applications Series (Read in Order)
+
+A research series exploring decentralized identity and its applications on Zenon.
+
+- [1. Decentralized Identity](decentralized-identity.md)
+- [2. Encrypted Messenger](encrypted-messenger.md)
+- [3. Bounded Verification DEX](bounded-verification-dex.md)
+
+---
+
+## Additional Research
+
+- [Bitcoin Anchoring](bitcoin-anchoring.md)
+- [Steganographic NFT vs Protocol Commitments](steganographic-nft-commitments.md)
+
+---
+
 ## External Resources
 
 - [External Resources](external-resources.md)

@@ -36,7 +36,7 @@
 
 ## Research
 - [Research Index](research/README.md)
-- Bounded Verification Series (Read in Order)
+- [Bounded Verification Series (Read in Order)](research/bounded-verification-series.md)
   - [1. Header-Only Verification](research/header-only-verification-research.md)
   - [1a. Header-Only Verification — Hostile Review](research/header-only-verification-hostile-review.md)
   - [2. Bounded Inclusion](research/bounded_inclusion_without_merkle_README.md)
@@ -50,6 +50,16 @@
 - [Open Research Questions](research/open-research-questions.md)
 - [Engineering Roadmap: Bitcoin SPV](research/engineering-roadmap-bitcoin-spv.md)
 - [Taxonomy: Deterministic Fact Acceptance](research/taxonomy-deterministic-fact-acceptance.md)
+- DID & Applications Series (Read in Order)
+  - [1. Decentralized Identity](research/decentralized-identity.md)
+  - [2. Encrypted Messenger](research/encrypted-messenger.md)
+  - [3. Bounded Verification DEX](research/bounded-verification-dex.md)
+- [Bitcoin Anchoring](research/bitcoin-anchoring.md)
+- [Steganographic NFT vs Protocol Commitments](research/steganographic-nft-commitments.md)
+
+## Feasibility
+- [Feasibility Index](feasibility/README.md)
+- [Satellite-Assisted Relay Feasibility](feasibility/satellite-relay-feasibility.md)
 
 ## Proposals
 - [Proposals Index](proposals/README.md)
