@@ -15,6 +15,7 @@ This document is non-normative and exploratory. It defines verification primitiv
 1. Motivation
 
 Light clients face a fundamental tension:
+
 	•	Security requires strong guarantees about chain history and state.
 	•	Accessibility requires bounded bandwidth, storage, and computation.
 
