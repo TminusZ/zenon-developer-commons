@@ -12,12 +12,14 @@ This model treats verification as a stateful process over time, not a one-shot c
 1. Scope and Non-Goals
 
 In Scope
+
 	•	Verifier state transitions
 	•	Conditions for acceptance and refusal
 	•	Offline and intermittent operation
 	•	Bounded resource assumptions
 
 Out of Scope
+
 	•	Execution of transactions
 	•	Consensus participation
 	•	Network topology or gossip mechanisms
