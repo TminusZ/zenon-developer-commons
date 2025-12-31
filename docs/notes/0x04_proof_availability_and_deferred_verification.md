@@ -1,4 +1,4 @@
-0x04 — Proof Availability & Deferred Verification
+Proof Availability & Deferred Verification
 
 Status
 
