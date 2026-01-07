@@ -17,7 +17,7 @@ Before using these models, read docs/architecture/bounded-verification-boundarie
 
 ### Context and Reading Guide
 
-docs/notes/genesis_anchoring_and_verification_context.md  
+Proper reading sequence for Series documents: GREENPAPER -> PURPLEPAPER -> INDIGOPAPER 
 
 ***  Explains how the Bitcoin-anchored genesis reframes the verification model explored in this repository.
 ---
