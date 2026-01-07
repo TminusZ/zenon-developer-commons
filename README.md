@@ -17,7 +17,7 @@ Before using these models, read docs/architecture/bounded-verification-boundarie
 
 ### Context and Reading Guide
 
-Proper reading sequence for Series documents: GREENPAPER -> PURPLEPAPER -> INDIGOPAPER 
+Proper reading sequence for Series documents: GREENPAPER -> PURPLEPAPER -> INDIGOPAPER -> ORANGEPAPER
 
 ***  Explains how the Bitcoin-anchored genesis reframes the verification model explored in this repository.
 ---
