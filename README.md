@@ -18,6 +18,23 @@ Before using these models, read docs/architecture/bounded-verification-boundarie
 **The full, structured Zenon architecture documentation is available here:**  
 👉 https://zenon-developer-commons.gitbook.io/zenon-developer-commons-docs
 
+### Recent Tooling from the Community — TypeScript SDK
+
+[znn-typescript-sdk](https://github.com/digitalSloth/znn-typescript-sdk)
+
+The znn-typescript-sdk is a TypeScript-native interface for interacting with the Zenon Network from browsers and Node.js environments.
+
+🚀 ESM-first architecture
+🔌 HTTP & WebSocket support
+💼 BIP39 wallet management
+🔐 Transaction signing with automatic PoW
+⌨️ Included CLI tooling
+📡 Real-time subscriptions
+🌐 Universal (Node.js + browser)
+📝 Full TypeScript typings
+
+*Special thanks to @digitalSloth for contributing this tooling to the Zenon ecosystem.*
+
 ### Context and Reading Guide
 
 Proper reading sequence for Series documents: GREENPAPER -> PURPLEPAPER -> INDIGOPAPER -> ORANGEPAPER
