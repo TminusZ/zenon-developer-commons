@@ -33,7 +33,7 @@ The znn-typescript-sdk is a TypeScript-native interface for interacting with the
 🌐 Universal (Node.js + browser)
 📝 Full TypeScript typings
 
-*Special thanks to @digitalSloth for contributing this tooling to the Zenon ecosystem.*
+*Special thanks to [@digitalSloth](https://github.com/digitalSloth) for contributing this tooling to the Zenon ecosystem.*
 
 ### Context and Reading Guide
 
