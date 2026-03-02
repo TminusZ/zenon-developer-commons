@@ -1,7 +1,7 @@
 # Verification First: Why Zenon Checks Before It Trusts
 
 **ZENON ALIEN COMMONS**  
-*March 2026*
+*March 2, 2026*
 
 ---
 
