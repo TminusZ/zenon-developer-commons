@@ -1,4 +1,4 @@
-Interstellar OS Stack Example
+# Interstellar OS Stack Example
 
 This directory contains an example protocol stack specification demonstrating how coordination protocols could be structured within a verification-first architecture.
 
@@ -6,7 +6,7 @@ The documents here describe a hypothetical system built around the concept of de
 
 This stack is not intended to represent a finalized or production protocol. It exists as a reference example showing what a full protocol design might look like when built on top of a verification-first blockchain environment.
 
-Purpose
+## Purpose
 
 The goal of this example stack is to illustrate several architectural ideas:
 
@@ -20,32 +20,34 @@ Separation between claim ordering and protocol interpretation
 
 The specifications attempt to show how complex coordination systems (such as markets) could be implemented under these constraints.
 
-Stack Overview
+## Stack Overview
 
 The example architecture described in these documents follows a layered model:
 
-Zenon Network
-    ↓
-Commit Channels
-    Ordered coordination claim log
-    ↓
-Interstellar OS
-    Deterministic verification kernel
-    ↓
-Protocol Modules
-    Example: Markets module
-    ↓
-Applications / Agents
+**Zenon Network**<br>
+↓<br>
+**Commit Channels**<br>
+<sub>Ordered coordination claim log</sub><br>
+↓<br>
+**Interstellar OS**<br>
+<sub>Deterministic verification kernel</sub><br>
+↓<br>
+**Protocol Modules**<br>
+<sub>Example: Markets module</sub><br>
+↓<br>
+**Applications / Agents**
 
 Each layer has a clearly defined responsibility:
 
-Layer	Role
-Zenon Network	Ordering, consensus, and data availability
-Commit Channels	Globally ordered coordination claim stream
-Interstellar OS	Deterministic claim verification and replay
-Protocol Modules	Domain-specific coordination rules
-Applications / Agents	Protocol participants
-Contents
+| Layer | Role |
+|-------|------|
+| Zenon Network | Ordering, consensus, and data availability |
+| Commit Channels | Globally ordered coordination claim stream |
+| Interstellar OS | Deterministic claim verification and replay |
+| Protocol Modules | Domain-specific coordination rules |
+| Applications / Agents | Protocol participants |
+
+## Contents
 
 This folder contains specification documents describing components of the example stack.
 
@@ -63,7 +65,7 @@ adversarial and incentive analysis
 
 The documents are written as design specifications to illustrate how such systems could be constructed.
 
-Important Notes
+## Important Notes
 
 This stack is published as a research and demonstration artifact.
 
@@ -77,7 +79,7 @@ It should be interpreted as an example architecture
 
 The goal is to help readers understand how verification-first systems can support complex protocol designs.
 
-Relationship to the Repository
+## Relationship to the Repository
 
 This directory is part of a broader research repository exploring verification-first coordination systems.
 
