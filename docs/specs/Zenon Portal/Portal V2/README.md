@@ -8,8 +8,6 @@ If this interpretation is correct, it has architectural implications for how the
 
 Because the original documentation leaves room for interpretation, **both versions of the specification are preserved**. The V2 revision adjusts the architectural assumptions to account for the possibility that “satellites” represent **a DA-layer network role rather than literal infrastructure nodes**.
 
-The core cryptographic and security design of the Portal protocol remains unchanged; the revisions primarily address **network architecture interpretation**.
-
 Both versions are intentionally left available so that **the community, researchers, and implementers can determine whether the specification is usable and which interpretation—if any—accurately reflects Zenon’s intended architecture**.
 
 This specification is independent research and should not be interpreted as official Zenon documentation.
