@@ -4,6 +4,10 @@
 
 ---
 
+[June 3, 2019 — @Zenon_Network](https://x.com/Zenon_Network/status/1135620822989725699?s=20)
+
+---
+
 ## Pretext
 
 As we began researching the Zenon architecture and developing the thesis presented here, our focus was initially on three roles: Sentries, Sentinels, and Pillars. Those layers alone described a coherent system for observing external events, verifying them cryptographically, and committing the results to a lightweight chain. The references to satellites in early documentation and developer posts were initially interpreted as a potential future feature — a form of offline relay or resilience layer made plausible by Zenon's extremely lightweight design. But revisiting the core developers' early diagrams and tweets revealed something more specific: satellites were not an optional add-on. They described a distinct node type with a defined role in the architecture. Recognizing this did not overturn the three-layer model we had reconstructed. Instead, it clarified that the design extended one layer further — adding a dedicated infrastructure component responsible for preserving and serving the artifacts that the chain commits.
