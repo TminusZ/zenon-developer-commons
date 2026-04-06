@@ -1,41 +1,55 @@
-Zenon Taproot Puzzle — On-Chain Artifact Reference
+## Zenon Taproot Puzzle — On-Chain Artifact Reference
 
-Status: Unsolved
-Since: November 14, 2021 (Taproot Activation)
-Network: Bitcoin Mainnet
-Block Height: 709,632
+**Status:** Unsolved  
+**Since:** November 14, 2021 (Taproot Activation)  
+**Network:** Bitcoin Mainnet  
+**Block Height:** 709,632  
 
-1. Purpose of This Folder
+---
 
-This folder documents a public, verifiable on-chain artifact embedded in Bitcoin at the moment of Taproot activation.
+## 1. Purpose of This Folder
+
+This folder documents a **public, verifiable on-chain artifact** embedded in Bitcoin at the moment of Taproot activation.
 
 It exists to:
 
-Anchor the artifact to exact transactions
-Provide raw OP_RETURN data
-Enable independent reproduction
-Clearly state current status: no confirmed solution exists
-2. Event Anchor
-Block: 709,632
-Date: 2021-11-14
-Significance: First Taproot-enforced block
+- Anchor the artifact to **exact transactions**
+- Provide **raw OP_RETURN data**
+- Enable **independent reproduction**
+- Clearly state current status: **no confirmed solution exists**
+
+---
+
+## 2. Event Anchor
+
+- **Block:** 709,632  
+- **Date:** 2021-11-14  
+- **Significance:** First Taproot-enforced block  
 
 This is a consensus-level transition point in Bitcoin history.
 
-3. Primary Address
+---
+
+## 3. Primary Address
 
 All artifact transactions originate from:
 
 bc1qrnldpdlq9dsfy946m4vqa5mrec8qhdrx363end
-4. Transaction Set (Canonical)
+
+
+---
+
+## 4. Transaction Set (Canonical)
 
 All transactions below occurred at:
 
-Timestamp: 2021-11-14 00:15:27
+**Timestamp:** `2021-11-14 00:15:27`
 
-Each transaction embeds a fragment of the artifact via OP_RETURN.
+Each transaction embeds a fragment of the artifact via `OP_RETURN`.
 
-🔗 Header Fields
+---
+
+### 🔗 Header Fields
 TXID: 31fd67de5583a60078e6b409560e9e2bc84e56c336178f3bedb627c0d2ae3b95
 OP_RETURN: ;BynQtpeUyWTXKGTrGhdV2Q==;
 
@@ -44,10 +58,20 @@ OP_RETURN: ;tVMd3L1CKM4wFmyxEEEUV2bY;
 
 TXID: 71d9187cbb7b00b4c516df218499bbc301996262cfafc4533fd7916af1fb6315
 OP_RETURN: ;4Fdzw1k=zzzzzzzzzzzzzzzz;
-🔗 Embedded Field
+
+
+---
+
+### 🔗 Embedded Field
+
 TXID: 57b5f224beb471fa78caeca665229166ec96da7798e5d05b15e37c07276a2476
 OP_RETURN: ,vtv3f5aKY0jGQglP9a1AGw==.
-🔗 Canopy / Upper Structure
+
+
+---
+
+### 🔗 Canopy / Upper Structure
+
 TXID: 19b3689ee5798131201f73a896967f7b854ed4fecd29b58f9ba27b9e7f7b609d
 OP_RETURN: .:1zzzzzzzzz.
 
@@ -62,7 +86,12 @@ OP_RETURN: ,;1zzzzzqqq,
 
 TXID: 488c0d5773d10b0d6268c6086d794071964def58aec05bb9dcf0769dfed9bb4a
 OP_RETURN: ,;qzzzzz1qq,
-🔗 Trunk / Lower Structure
+
+
+---
+
+### 🔗 Trunk / Lower Structure
+
 TXID: d4d7ec6fcef9e8a3ea9fc726e43b631d0a6a7c702bec157e2ed10c030fc2b329
 OP_RETURN: ,zzzzzq;. 1zzzz,
 
@@ -86,60 +115,86 @@ OP_RETURN: ,zzzzq .;qzzzzzzz,
 
 TXID: b63c7002d5bade2530e1603af839198d4124de5799c16b863757fe0f79f181a8
 OP_RETURN: ,zzzzq ,qzzzzzzzzzz,
-🔗 Structural Padding / Base Rows
+
+
+---
+
+### 🔗 Structural Padding / Base Rows
+
 TXID: f985bca535579e9d63ada9bc7ee0bfc2365acf0116abc5bb19d24292b5cc7f97
 OP_RETURN: ,zzzzzzzzzzzzzzzzzzzzzzzz,
 
 TXID: 86a2ce16fab79157cc8b38a4c5bb6c0ef1ddc284b0fd9e0f47d99d3fa154b7dd
 OP_RETURN: ,zzzzzzzzzzzzzzzzzzzzzzzz,
-🔗 Terminal Marker
+
+
+---
+
+### 🔗 Terminal Marker
+
 TXID: 911dcb7435932f64215f8de4058186aef9bfd4356978c95830e77a38b9484083
 OP_RETURN: ZENON NETWORK
-5. Full Artifact Reconstruction
 
-When concatenated in structural order, the transactions reconstruct a multi-layer ASCII artifact containing:
 
-3 header Base64 fields
-1 embedded Base64 field
-5-row canopy structure
-8-row trunk structure
-terminal marker
-6. Verification
+---
+
+## 5. Full Artifact Reconstruction
+
+When concatenated in structural order, the transactions reconstruct a **multi-layer ASCII artifact** containing:
+
+- 3 header Base64 fields  
+- 1 embedded Base64 field  
+- 5-row canopy structure  
+- 8-row trunk structure  
+- terminal marker  
+
+---
+
+## 6. Verification
 
 To independently verify:
 
-Open block 709632 in any explorer
-
-Filter for transactions from:
+1. Open block `709632` in any explorer  
+2. Filter for transactions from:
 
 bc1qrnldpdlq9dsfy946m4vqa5mrec8qhdrx363end
-Inspect OP_RETURN outputs
-Reassemble rows in order
 
-All data is fully on-chain.
+3. Inspect `OP_RETURN` outputs  
+4. Reassemble rows in order  
 
-7. Status
-Public since Taproot activation
-Fully reproducible from chain data
-Extensively analyzed by independent parties
+All data is **fully on-chain**.
 
-No confirmed solution exists.
-No private key, plaintext, or protocol-level meaning has been cryptographically validated.
+---
 
-8. Scope
+## 7. Status
 
-This folder does not claim:
+- Public since Taproot activation  
+- Fully reproducible from chain data  
+- Extensively analyzed by independent parties  
 
-A solved interpretation
-A valid key derivation
-A confirmed protocol mapping
+> **No confirmed solution exists.**  
+> No private key, plaintext, or protocol-level meaning has been cryptographically validated.
+
+---
+
+## 8. Scope
+
+This folder does **not** claim:
+
+- A solved interpretation  
+- A valid key derivation  
+- A confirmed protocol mapping  
 
 It provides:
 
-Raw data
-Canonical ordering
-Verifiable reference
-9. TL;DR
-Taproot block contains a structured ASCII artifact
-It is fully reconstructable from OP_RETURN data
-It has remained unsolved since November 14, 2021
+- Raw data  
+- Canonical ordering  
+- Verifiable reference  
+
+---
+
+## 9. TL;DR
+
+- Taproot block contains a structured ASCII artifact  
+- It is fully reconstructable from OP_RETURN data  
+- It has remained **unsolved since November 14, 2021**
