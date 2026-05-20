@@ -18,6 +18,20 @@ Before using these models, read docs/architecture/bounded-verification-boundarie
 **The full, structured Zenon architecture documentation is available here:**  
 👉 https://zenon-developer-commons.gitbook.io/zenon-developer-commons-docs
 
+## Status
+
+This repository is a reference.
+
+It contains specifications and essays describing constraints and invariants of verification-first systems.
+
+These models align with Zenon, but do not define it.
+
+Correctness is only defined within stated invariants.
+
+Any derived implementation will diverge.
+
+No further updates are planned.
+
 ### Recent Tooling from the Community — TypeScript SDK
 
 [znn-typescript-sdk](https://github.com/digitalSloth/znn-typescript-sdk)
