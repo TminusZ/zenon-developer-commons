@@ -47,7 +47,7 @@ This document addresses:
 
 - Mechanical extraction of all Base64 fields
 - Structural row alignment across fields
-- Canopy generation layer (structural quantities locked; full character-sequence renderer open)
+- Canopy generation layer (row alignment and render channels identified; exact renderer open)
 - Trunk rewrite system (7/7 forward predictions confirmed)
 - E-layer selector anomaly (exhaustively enumerated; uniqueness confirmed)
 - Row 6 as the proof locus (five independent convergence signals)
@@ -73,31 +73,32 @@ All claims are accompanied by their falsification conditions.
 
 ### 2.1 Canonical Artifact
 
-The artifact as embedded in Bitcoin block 709,632:
+The artifact from Bitcoin block 709,632, rendered by structural region:
 
-```
-;BynQtpeUyWTXKGTrGhdV2Q==;
-;tVMd3L1CKM4wFmyxEEEUV2bY;
-;4Fdzw1k=zzzzzzzzzzzzzzzz;
+```text
+      ;BynQtpeUyWTXKGTrGhdV2Q==;
+      ;tVMd3L1CKM4wFmyxEEEUV2bY;
+      ;4Fdzw1k=zzzzzzzzzzzzzzzz;
 
-               .:1zzzzzzzzz.
-             .:qqzzzzqqqq,
-           ,;1zzzzzzqqqq,
-         ,;1zzzzzqqqq,
+                  .:1zzzzzzzzz.
+                .:qqzzzzqqq,
+             ,;1zzzzzqqq,
+          ,;1zzzzzqqq,
        ,;qzzzzz1qq,
 
-,vtv3f5aKY0jGQglP9a1AGw==.
+      ,vtv3f5aKY0jGQglP9a1AGw==.
 
-,zzzzzzzzzzzzzzzzzzzzzzzz,
-,zzzzzzzzzzzzzzzzzzzzzzzz,
-,zzzzzq;.          1zzzz,
-,zzzzzzzzq,        1zzzz,
-,zzzzzzzzzz1:      1zzzz,
-,zzzzq:1zzzzzq;.   1zzzz,
-,zzzzq  ,qzzzzzzz1, 1zzzz,
-,zzzzq    .;qzzzzzq:1zzzz,
-,zzzzq        ,qzzzzzzzzzzz,
-,zzzzq            .;qzzzzzzzzz,
+      ,zzzzzzzzzzzzzzzzzzzzzzzz,
+      ,zzzzzzzzzzzzzzzzzzzzzzzz,
+      ,zzzzzq;.           1zzzz,
+      ,zzzzzzzzq,         1zzzz,
+      ,zzzzzzzzzz1:       1zzzz,
+      ,zzzzq:1zzzzzq;.    1zzzz,
+      ,zzzzq  ,qzzzzzz1,  1zzzz,
+      ,zzzzq    .;qzzzzzq:1zzzz,
+      ,zzzzq       ,qzzzzzzzzzz,
+      ,zzzzq         .;qzzzzzzz,
+ZENON NETWORK
 ```
 
 ### 2.2 Field Identification
@@ -212,17 +213,17 @@ requires that all three counts match without intent only by extreme coincidence.
 
 ### 4.1 Canonical Canopy Rows
 
-```
-R1:  .:1zzzzzzzzz.
-R2:    .:qqzzzzqqqq,
-R3:  ,;1zzzzzzqqqq,
-R4:  ,;1zzzzzqqqq,
-R5:  ,;qzzzzz1qq,
+```text
+R1:                  .:1zzzzzzzzz.
+R2:                .:qqzzzzqqq,
+R3:             ,;1zzzzzqqq,
+R4:          ,;1zzzzzqqq,
+R5:       ,;qzzzzz1qq,
 ```
 
 ### 4.2 Observed Per-Row Structural Quantities
 
-For each row, three quantities are directly measurable:
+For each row, three quantities are directly measurable on the trimmed row body:
 
 - **L** = total character count
 - **Nz** = count of `z` characters
@@ -230,55 +231,49 @@ For each row, three quantities are directly measurable:
 
 | Row | L | Nz | Nq | B_mid byte | C byte |
 |---|---|---|---|---|---|
-| 1 | 14 | 9 | 0 | `bd` | `e0` |
-| 2 | 14 | 4 | 4 | `ce` | `57` |
-| 3 | 14 | 6 | 4 | `6c` | `73` |
-| 4 | 13 | 5 | 3 | `41` | `c3` |
-| 5 | 12 | 5 | 2 | `66` | `59` |
+| 1 | 13 | 9 | 0 | `bd` | `e0` |
+| 2 | 12 | 4 | 5 | `ce` | `57` |
+| 3 | 12 | 5 | 3 | `6c` | `73` |
+| 4 | 12 | 5 | 3 | `41` | `c3` |
+| 5 | 12 | 5 | 3 | `66` | `59` |
 
 ### 4.3 Derivable Structural Correspondences ⚠️
 
-The following correspondences survive direct computation and hostile review:
+The following correspondences survive direct computation on the canonical canopy rows:
 
-**Row length modular structure** (L_i mod (C_i & 0x0F)):
+**Row length structure**:
 
-| Row | Computation | Result |
+| Row | L | C low nibble |
 |---|---|---|
-| 1 | 14 mod 0 | degenerate (skip) |
-| 2 | 14 mod 7 | 0 |
-| 3 | 14 mod 3 | 2 |
-| 4 | 13 mod 3 | 1 |
-| 5 | 12 mod 9 | 3 |
+| 1 | 13 | 0 |
+| 2 | 12 | 7 |
+| 3 | 12 | 3 |
+| 4 | 12 | 3 |
+| 5 | 12 | 9 |
 
-Residue sequence 0, 2, 1, 3 is consistent with a monotone traversal governed by C's low nibble.
+**q-count vs B high nibble**:
 
-**q-count vs B high nibble** (rows 3–5 satisfy Nq = B_hi − δ for stable δ):
-
-| Row | Nq | B_hi | Formula |
-|---|---|---|---|
-| 3 | 4 | 6 | 6 − 2 = 4 ✓ |
-| 4 | 3 | 4 | 4 − 1 = 3 ✓ |
-| 5 | 2 | 6 | 6 − 4 = 2 ✓ |
+| Row | Nq | B_hi |
+|---|---|---|
+| 1 | 0 | `b`=11 |
+| 2 | 5 | `c`=12 |
+| 3 | 3 | `6`=6 |
+| 4 | 3 | `4`=4 |
+| 5 | 3 | `6`=6 |
 
 **z-count vs B low nibble and C low nibble**:
 
-| Row | Nz | B_lo | C_lo | Formula |
-|---|---|---|---|---|
-| 1 | 9 | `d`=13 | 0 | 13 − 4 = 9 ✓ |
-| 2 | 4 | `e`=14 | 7 | 14 − 7 − 3 = 4 ✓ |
-| 3 | 6 | `c`=12 | 3 | 12 − 3 − 3 = 6 ✓ |
-| 4 | 5 | `1`=1 | 3 | (1 + 3) + 1 = 5 ✓ |
-| 5 | 5 | `8`=8 | 9 | (8 + 9) mod 12 = 5 ✓ |
+| Row | Nz | B_lo | C_lo |
+|---|---|---|---|
+| 1 | 9 | `d`=13 | 0 |
+| 2 | 4 | `e`=14 | 7 |
+| 3 | 5 | `c`=12 | 3 |
+| 4 | 5 | `1`=1 | 3 |
+| 5 | 5 | `8`=8 | 9 |
 
 ### 4.4 Canopy Generator Model ⚠️
 
-Each canopy row's structural quantities are functions of its aligned (G_i, C_i) pair:
-
-```
-Row_i.Nz = f_z(B_i[lo], C_i[lo])
-Row_i.Nq = f_q(B_i[hi])
-Row_i.L  = f_L(C_i[lo])
-```
+The five canopy rows align 1:1 with `G1..G5` and the five C bytes.
 
 The four render channels are:
 
@@ -286,19 +281,19 @@ The four render channels are:
 |---|---|---|
 | PrefixFamily | G_i, C_i | Binary `:. ` vs `,;` — selector unresolved |
 | PivotClass | C_i low nibble | ONE / QQ / Q — partial |
-| TailClass | C_i | NULL / Q4 / MIXED — partial |
-| BodyAlloc | Residual after Pivot and Tail | Derivable |
+| TailClass | C_i | NULL / Q3 / MIXED — partial |
+| BodyAlloc | Residual after Pivot and Tail | Derivable from row body |
 
-🔒 **Partial lock:** Row structural quantities (L, Nz, Nq) are deterministically governed by B and C. Full character-sequence reproducibility is the primary open problem.
+⚠️ **Partial lock:** Row alignment and render channels are preserved. Full character-sequence reproducibility from byte-level inputs remains the primary open problem.
 
 ### 4.5 Symbolic Decomposition
 
 | Row | Prefix | Pivot | ZSpan | Tail | End |
 |---|---|---|---|---|---|
 | R1 | `.:` | `1` | 9 | ∅ | `.` |
-| R2 | `.:` | `qq` | 4 | `qqqq` | `,` |
-| R3 | `,;` | `1` | 6 | `qqqq` | `,` |
-| R4 | `,;` | `1` | 5 | `qqqq` | `,` |
+| R2 | `.:` | `qq` | 4 | `qqq` | `,` |
+| R3 | `,;` | `1` | 5 | `qqq` | `,` |
+| R4 | `,;` | `1` | 5 | `qqq` | `,` |
 | R5 | `,;` | `q` | 5 | `1qq` | `,` |
 
 ---
@@ -307,15 +302,15 @@ The four render channels are:
 
 ### 5.1 Canonical Trunk Rows
 
-```
-R1:  ,zzzzzq;.          1zzzz,
-R2:  ,zzzzzzzzq,        1zzzz,
-R3:  ,zzzzzzzzzz1:      1zzzz,
-R4:  ,zzzzq:1zzzzzq;.   1zzzz,
-R5:  ,zzzzq  ,qzzzzzzz1, 1zzzz,
-R6:  ,zzzzq    .;qzzzzzq:1zzzz,
-R7:  ,zzzzq        ,qzzzzzzzzzzz,
-R8:  ,zzzzq            .;qzzzzzzzzz,
+```text
+R1:      ,zzzzzq;.           1zzzz,
+R2:      ,zzzzzzzzq,         1zzzz,
+R3:      ,zzzzzzzzzz1:       1zzzz,
+R4:      ,zzzzq:1zzzzzq;.    1zzzz,
+R5:      ,zzzzq  ,qzzzzzz1,  1zzzz,
+R6:      ,zzzzq    .;qzzzzzq:1zzzz,
+R7:      ,zzzzq       ,qzzzzzzzzzz,
+R8:      ,zzzzq         .;qzzzzzzz,
 ```
 
 ### 5.2 Core Notation
@@ -851,7 +846,7 @@ The Zenon Taproot artifact contains a uniquely privileged local core fragment, G
 ### 15.4 Current Machine Summary
 
 ```
-B + C  →  canopy generator (structural quantities locked; full sequence open)
+B + C  →  canopy alignment and render-channel candidates (exact renderer open)
 A      →  trunk control layer (phase schedule 00,11,11,10,10,01,00,01)
 Trunk  →  visible execution path / rewrite machine (7/7 forward predictions)
 E      →  marker overlay (sole legal selector at row 6-left)
@@ -867,7 +862,7 @@ G3     →  compressed core artifact (score 22, uniquely highest)
 
 **Status:** Primary open problem.
 
-Structural quantities (L, Nz, Nq) are derivable from B and C. The remaining gap is the exact row-rendering law that reproduces every character position, punctuation placement, and symbol ordering within each canopy row. The four render channels (PrefixFamily, PivotClass, TailClass, BodyAlloc) have been identified, but the precise byte-level selectors within each channel remain unresolved.
+The canopy rows align with `G1..G5` and the five C bytes, and their render channels (PrefixFamily, PivotClass, TailClass, BodyAlloc) are directly identifiable from the artifact. The remaining gap is the exact row-rendering law that reproduces every character position, punctuation placement, and symbol ordering within each canopy row from byte-level inputs.
 
 **Next step:** Identify the second canopy channel — likely pivot position within each row or the z/q boundary location — which, combined with pivot identity, would provide two-dimensional canopy encoding sufficient to move from partial lock to full lock.
 
@@ -939,7 +934,7 @@ STATUS: LOCAL STATE MACHINE IDENTIFIED — S1 through S7
 STATUS: CONSERVED CORRIDOR CORE IDENTIFIED — 00 40 10
 STATUS: WHOLE-ARTIFACT ASYMMETRY ESTABLISHED
 STATUS: B ARCHITECTURE RESOLVED — Canopy / Proof Corridor / Canopy
-STATUS: CANOPY STRUCTURAL QUANTITIES DERIVABLE — full sequence open
+STATUS: CANOPY RENDER CHANNELS IDENTIFIED — exact renderer open
 STATUS: TRUNK REWRITE SYSTEM FORWARD-PREDICTIVE — 7/7 (overfitting addressed)
 STATUS: CANOPY PIVOT CHANNEL LOCKED — yields 0x09 or 0x16 by polarity
 STATUS: ZENON PROTOCOL CORRESPONDENCE MAPPED — 12-layer equivalence table
@@ -948,4 +943,4 @@ STATUS: NO FORCED EXTERNAL DECODE — internal closure is current strongest endp
 
 ---
 
-*Document compiled from iterative hostile-review cycles. All errors corrected under review have been incorporated, including: OP_PUSH22 label correction (0x16), canopy arithmetic consistency verification, and epistemic scope restrictions on all unproven claims.*
+*Document compiled from iterative hostile-review cycles. All errors corrected under review have been incorporated, including: OP_PUSH22 label correction (0x16), and epistemic scope restrictions on all unproven claims.*
