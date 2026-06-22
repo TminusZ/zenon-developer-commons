@@ -36,5 +36,3 @@ The goal of Project Zeno is to provide:
 The intent is to eliminate ambiguity and produce documentation that can be handed directly to engineers for implementation.
 
 Project Zeno should be viewed as a proposed architecture awaiting review rather than a finalized network commitment.
-
-Anyone interested in implementing the specification is encouraged to do so.
