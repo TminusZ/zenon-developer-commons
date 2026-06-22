@@ -1,5 +1,3 @@
-Project Zeno
-
 Project Zeno is a complete implementation specification for a deterministic WASM execution layer built on Zenon.
 
 Unlike many of the documents in this repository, Project Zeno is not exploratory research. The objective is to maintain a formal protocol specification that independent developers can build against directly.
