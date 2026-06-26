@@ -1,0 +1,726 @@
+{
+  "artifact": "wasm-gas-table-v1",
+  "metering_version": 1,
+  "runtime_profile": "WebAssembly Core 1.0 MVP (integer subset)",
+  "excluded_from_metering": {
+    "reason": "rejected by the deployment validation pipeline (SPEC.md §7.2, §11.3) and therefore never metered",
+    "categories": [
+      "all f32.* and f64.* floating-point instructions",
+      "all v128 SIMD instructions",
+      "all threads/atomics instructions",
+      "all WASI imports",
+      "sign-extension operators i32.extend8_s/i32.extend16_s/i64.extend8_s/i64.extend16_s/i64.extend32_s (outside strict Core 1.0 MVP)",
+      "saturating float-to-int conversions (trunc_sat, outside strict Core 1.0 MVP)"
+    ]
+  },
+  "unit": "L2 gas (plasma) units",
+  "cost_principles": [
+    "1 = trivial: consts, locals, simple integer add/sub/bitwise/shift/rotate, comparisons",
+    "2 = light: loads/stores, mul, clz/ctz/popcnt, global access, select, integer conversions, memory.size",
+    "5 = integer div/rem (variable-latency) and memory.grow base",
+    "branch/call overhead modeled explicitly (br/br_if/br_table=2, return=2, call=5, call_indirect=10)"
+  ],
+  "block_metering": {
+    "model": "basic-block charge injection",
+    "rule": "Gas for straight-line instructions MUST be summed per basic block and decremented once at block entry (the standard fuel model). The observable cost of executing a basic block MUST equal the sum of its instructions' table costs. Branch/call costs are the costs of the branch/call instructions themselves.",
+    "note": "Instrumentation is deterministic (SPEC.md §11.3). Two implementations MUST decrement identical totals for identical executed basic-block sequences."
+  },
+  "memory_model": {
+    "wasm_page_bytes": 65536,
+    "memory_grow_base": 5,
+    "memory_grow_per_page": 1000,
+    "note": "memory.grow base is in the opcode table; per-page surcharge here. Initial memory declared at instantiation is charged as memory_grow_per_page * initial_pages against the input budget before execution begins."
+  },
+  "opcode_count": 104,
+  "opcodes": [
+    {
+      "mnemonic": "unreachable",
+      "opcode": "0x00",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "nop",
+      "opcode": "0x01",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "block",
+      "opcode": "0x02",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "loop",
+      "opcode": "0x03",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "if",
+      "opcode": "0x04",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "else",
+      "opcode": "0x05",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "end",
+      "opcode": "0x0B",
+      "cost": 1,
+      "group": "control"
+    },
+    {
+      "mnemonic": "br",
+      "opcode": "0x0C",
+      "cost": 2,
+      "group": "control"
+    },
+    {
+      "mnemonic": "br_if",
+      "opcode": "0x0D",
+      "cost": 2,
+      "group": "control"
+    },
+    {
+      "mnemonic": "br_table",
+      "opcode": "0x0E",
+      "cost": 2,
+      "group": "control"
+    },
+    {
+      "mnemonic": "return",
+      "opcode": "0x0F",
+      "cost": 2,
+      "group": "control"
+    },
+    {
+      "mnemonic": "call",
+      "opcode": "0x10",
+      "cost": 5,
+      "group": "control"
+    },
+    {
+      "mnemonic": "call_indirect",
+      "opcode": "0x11",
+      "cost": 10,
+      "group": "control"
+    },
+    {
+      "mnemonic": "drop",
+      "opcode": "0x1A",
+      "cost": 1,
+      "group": "parametric"
+    },
+    {
+      "mnemonic": "select",
+      "opcode": "0x1B",
+      "cost": 2,
+      "group": "parametric"
+    },
+    {
+      "mnemonic": "local.get",
+      "opcode": "0x20",
+      "cost": 1,
+      "group": "variable"
+    },
+    {
+      "mnemonic": "local.set",
+      "opcode": "0x21",
+      "cost": 1,
+      "group": "variable"
+    },
+    {
+      "mnemonic": "local.tee",
+      "opcode": "0x22",
+      "cost": 1,
+      "group": "variable"
+    },
+    {
+      "mnemonic": "global.get",
+      "opcode": "0x23",
+      "cost": 2,
+      "group": "variable"
+    },
+    {
+      "mnemonic": "global.set",
+      "opcode": "0x24",
+      "cost": 2,
+      "group": "variable"
+    },
+    {
+      "mnemonic": "i32.load",
+      "opcode": "0x28",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load",
+      "opcode": "0x29",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.load8_s",
+      "opcode": "0x2C",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.load8_u",
+      "opcode": "0x2D",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.load16_s",
+      "opcode": "0x2E",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.load16_u",
+      "opcode": "0x2F",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load8_s",
+      "opcode": "0x30",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load8_u",
+      "opcode": "0x31",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load16_s",
+      "opcode": "0x32",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load16_u",
+      "opcode": "0x33",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load32_s",
+      "opcode": "0x34",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.load32_u",
+      "opcode": "0x35",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.store",
+      "opcode": "0x36",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.store",
+      "opcode": "0x37",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.store8",
+      "opcode": "0x3A",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.store16",
+      "opcode": "0x3B",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.store8",
+      "opcode": "0x3C",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.store16",
+      "opcode": "0x3D",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i64.store32",
+      "opcode": "0x3E",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "memory.size",
+      "opcode": "0x3F",
+      "cost": 2,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "memory.grow",
+      "opcode": "0x40",
+      "cost": 5,
+      "group": "memory"
+    },
+    {
+      "mnemonic": "i32.const",
+      "opcode": "0x41",
+      "cost": 1,
+      "group": "numeric_const"
+    },
+    {
+      "mnemonic": "i64.const",
+      "opcode": "0x42",
+      "cost": 1,
+      "group": "numeric_const"
+    },
+    {
+      "mnemonic": "i32.eqz",
+      "opcode": "0x45",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.eq",
+      "opcode": "0x46",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.ne",
+      "opcode": "0x47",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.lt_s",
+      "opcode": "0x48",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.lt_u",
+      "opcode": "0x49",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.gt_s",
+      "opcode": "0x4A",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.gt_u",
+      "opcode": "0x4B",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.le_s",
+      "opcode": "0x4C",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.le_u",
+      "opcode": "0x4D",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.ge_s",
+      "opcode": "0x4E",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.ge_u",
+      "opcode": "0x4F",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.eqz",
+      "opcode": "0x50",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.eq",
+      "opcode": "0x51",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.ne",
+      "opcode": "0x52",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.lt_s",
+      "opcode": "0x53",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.lt_u",
+      "opcode": "0x54",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.gt_s",
+      "opcode": "0x55",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.gt_u",
+      "opcode": "0x56",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.le_s",
+      "opcode": "0x57",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.le_u",
+      "opcode": "0x58",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.ge_s",
+      "opcode": "0x59",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i64.ge_u",
+      "opcode": "0x5A",
+      "cost": 1,
+      "group": "comparison"
+    },
+    {
+      "mnemonic": "i32.clz",
+      "opcode": "0x67",
+      "cost": 2,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.ctz",
+      "opcode": "0x68",
+      "cost": 2,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.popcnt",
+      "opcode": "0x69",
+      "cost": 2,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.add",
+      "opcode": "0x6A",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.sub",
+      "opcode": "0x6B",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.mul",
+      "opcode": "0x6C",
+      "cost": 2,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.div_s",
+      "opcode": "0x6D",
+      "cost": 5,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.div_u",
+      "opcode": "0x6E",
+      "cost": 5,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.rem_s",
+      "opcode": "0x6F",
+      "cost": 5,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.rem_u",
+      "opcode": "0x70",
+      "cost": 5,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.and",
+      "opcode": "0x71",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.or",
+      "opcode": "0x72",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.xor",
+      "opcode": "0x73",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.shl",
+      "opcode": "0x74",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.shr_s",
+      "opcode": "0x75",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.shr_u",
+      "opcode": "0x76",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.rotl",
+      "opcode": "0x77",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i32.rotr",
+      "opcode": "0x78",
+      "cost": 1,
+      "group": "numeric_i32"
+    },
+    {
+      "mnemonic": "i64.clz",
+      "opcode": "0x79",
+      "cost": 2,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.ctz",
+      "opcode": "0x7A",
+      "cost": 2,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.popcnt",
+      "opcode": "0x7B",
+      "cost": 2,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.add",
+      "opcode": "0x7C",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.sub",
+      "opcode": "0x7D",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.mul",
+      "opcode": "0x7E",
+      "cost": 2,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.div_s",
+      "opcode": "0x7F",
+      "cost": 5,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.div_u",
+      "opcode": "0x80",
+      "cost": 5,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.rem_s",
+      "opcode": "0x81",
+      "cost": 5,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.rem_u",
+      "opcode": "0x82",
+      "cost": 5,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.and",
+      "opcode": "0x83",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.or",
+      "opcode": "0x84",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.xor",
+      "opcode": "0x85",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.shl",
+      "opcode": "0x86",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.shr_s",
+      "opcode": "0x87",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.shr_u",
+      "opcode": "0x88",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.rotl",
+      "opcode": "0x89",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i64.rotr",
+      "opcode": "0x8A",
+      "cost": 1,
+      "group": "numeric_i64"
+    },
+    {
+      "mnemonic": "i32.wrap_i64",
+      "opcode": "0xA7",
+      "cost": 1,
+      "group": "conversion"
+    },
+    {
+      "mnemonic": "i64.extend_i32_s",
+      "opcode": "0xAC",
+      "cost": 1,
+      "group": "conversion"
+    },
+    {
+      "mnemonic": "i64.extend_i32_u",
+      "opcode": "0xAD",
+      "cost": 1,
+      "group": "conversion"
+    }
+  ],
+  "surcharges": {
+    "br_table": {
+      "per_target_entry": 1,
+      "note": "total = base(2) + 1 per branch target in the table (including the default)."
+    },
+    "memory.grow": {
+      "per_page": 1000,
+      "note": "total = base(5) + 1000 * delta_pages. A grow that would exceed MaxMemory returns -1 and charges only the base(5); no per-page charge for the rejected pages. One page = 65536 bytes."
+    },
+    "call_indirect": {
+      "note": "base 10 covers table bounds check + type check + dispatch."
+    }
+  },
+  "host_functions": {
+    "storage_len": {
+      "base": 100,
+      "per_32_bytes": 0,
+      "note": "fixed base cost; key length is bounded by MaxStateKeySize=32 so no per-byte term."
+    },
+    "storage_read": {
+      "base": 200,
+      "per_32_bytes": 10,
+      "note": "total = 200 + 10 * ceil(value_bytes/32). Charged on the value actually read; an absent key (returns -1) charges base only."
+    },
+    "abort": {
+      "base": 1,
+      "per_32_bytes": 0,
+      "note": "minimal fixed cost; halts execution."
+    }
+  },
+  "post_execution_effect_charges": {
+    "state_diff_entry": {
+      "base": 500,
+      "per_32_bytes": 20,
+      "note": "per StateDiff entry; total = 500 + 20 * ceil(value_bytes/32). A deletion (EMPTY sentinel) charges base only (value_bytes=0)."
+    },
+    "event": {
+      "base": 100,
+      "per_32_bytes": 10,
+      "note": "per event; total = 100 + 10 * ceil(data_bytes/32). Topics are fixed 32-byte each and included in base accounting up to MaxTopicsPerEvent."
+    },
+    "outbox_message": {
+      "base": 200,
+      "per_32_bytes": 5,
+      "note": "per outbox message; total = 200 + 5 * ceil(payload_bytes/32)."
+    },
+    "return_data": {
+      "base": 10,
+      "per_32_bytes": 2,
+      "note": "charged once for ReturnData; total = 10 + 2 * ceil(return_bytes/32)."
+    }
+  },
+  "out_of_gas": {
+    "rule": "Gas is checked before each basic block and before each host call and before the post-execution effect charge. On exhaustion at any point the input fails OUT_OF_GAS with full rollback (SPEC.md §10.5)."
+  },
+  "ceil_helper": {
+    "definition": "ceil(n/32) = (n + 31) // 32",
+    "applies_to": [
+      "storage_read",
+      "state_diff_entry",
+      "event",
+      "outbox_message",
+      "return_data"
+    ]
+  }
+}

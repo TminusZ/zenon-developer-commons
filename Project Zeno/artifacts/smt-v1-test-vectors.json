@@ -1,0 +1,617 @@
+{
+  "suite": "SMT-CONFORMANCE-V1",
+  "hash": "SHA3-256 (FIPS-202)",
+  "key_space_bits": 256,
+  "key_size_bytes": 32,
+  "canonical_profile": {
+    "P-DEPTH": "Full binary tree of depth 256; each leaf at depth 256 keyed by full 32-byte key.",
+    "P-BITDIR": "MSB-first. Depth d branches on key bit (255-d); within a byte the MSB is consumed first. Root (depth 0) uses the top bit of byte[0].",
+    "P-SIDE": "Path bit 0 => LEFT child, path bit 1 => RIGHT child.",
+    "P-EMPTY": "Empty subtree hash is the constant 32-byte zero at EVERY level; an interior node with two zero32 children is zero32 (not H(0||0)).",
+    "P-LEAF": "leaf = SHA3-256(key(32) || value(var)). Absent slot contributes zero32. Present value (including empty) contributes SHA3-256(key||value).",
+    "P-NODE": "interior = SHA3-256(left(32) || right(32)), with the both-empty short-circuit from P-EMPTY.",
+    "status": "P-LEAF, P-NODE, P-EMPTY and the routing rules P-DEPTH, P-BITDIR, P-SIDE are all now pinned normatively in SPEC.md §13.4 and implemented in common/trie. Blockers SMT-B-1/B-2/B-3 are resolved (see SMT-SPEC-BLOCKERS.md)."
+  },
+  "sentinel_constants": {
+    "EMPTY_value_length_prefix_hex": "ffffffff",
+    "present_empty_value_length_prefix_hex": "00000000",
+    "zero32_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+    "sha3_256_empty_input_hex": "a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a"
+  },
+  "vectors": [
+    {
+      "id": "SMT-001",
+      "purpose": "Empty tree root is the 32-byte zero hash.",
+      "initial_state": {},
+      "operations": [],
+      "resulting_state": {},
+      "expected_leaf_hashes": {},
+      "expected_root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "note": "No leaves. Root MUST be 32 zero bytes per P-EMPTY (constant zero at every level)."
+    },
+    {
+      "id": "SMT-002",
+      "purpose": "Single insert, lowest key (all-left path).",
+      "initial_state": {},
+      "operations": [
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": "01"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c"
+      },
+      "expected_root": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+      "expected_branch_hashes": {
+        "leaf_hash": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "node_at_depth_255": "b5a570d8eb739ebe718f96c8b158a6102f3edcec98ad7025f0d64137024c3619",
+        "node_at_depth_254": "74f6ccf3bcefdc48f6a56d587a7772532e8b78da053051a6813688859d796085",
+        "node_at_depth_1": "95981ec205aca6de6789daf862176151451d01bcaada7bf2717513b9e2eafaf3",
+        "node_at_depth_0": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749"
+      },
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "01",
+        "leaf_hash": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "010000000000000000000000000000000000000000000000000000000000000000aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c000000000000000000000000000000000000000000000000000000000000000000000000000101",
+        "serialized_len": 104
+      },
+      "expected_non_inclusion_proof": {
+        "key": "8000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000001",
+        "siblings_nonzero_deepest_first": [
+          "95981ec205aca6de6789daf862176151451d01bcaada7bf2717513b9e2eafaf3"
+        ],
+        "serialized": "00800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000195981ec205aca6de6789daf862176151451d01bcaada7bf2717513b9e2eafaf3",
+        "serialized_len": 131
+      },
+      "note": "Single leaf climbs 256 levels; sibling is zero32 at every level (right side, since all path bits are 0)."
+    },
+    {
+      "id": "SMT-003",
+      "purpose": "Single insert, highest key 0xFF..FF (all-right path).",
+      "initial_state": {},
+      "operations": [
+        {
+          "op": "insert",
+          "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "value": "ff"
+        }
+      ],
+      "resulting_state": {
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "ff"
+      },
+      "expected_leaf_hashes": {
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "21cdb7441a98b04f1307f2a2eb4ba93ac30366a1f705382658489bc8e24ee1a5"
+      },
+      "expected_root": "2041142316322ac046efe19358a6af9ce9fafae45a4441143c3f9ad69d69195b",
+      "expected_branch_hashes": {
+        "leaf_hash": "21cdb7441a98b04f1307f2a2eb4ba93ac30366a1f705382658489bc8e24ee1a5",
+        "node_at_depth_255": "4a1876089d3659b89733060b3dc0f19fbbd8797d5d28d9780807e30f77d9a1fb",
+        "node_at_depth_254": "bab33ae473db56c6d153758e216ed1f31fbbc4029573fc6cf1a4d0d192f30c32",
+        "node_at_depth_1": "78baf55244feafff3c9a795c1b30758300dc38fdf98f7e83e71d9baf4da0e7d7",
+        "node_at_depth_0": "2041142316322ac046efe19358a6af9ce9fafae45a4441143c3f9ad69d69195b"
+      },
+      "expected_inclusion_proof": {
+        "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "present": true,
+        "value": "ff",
+        "leaf_hash": "21cdb7441a98b04f1307f2a2eb4ba93ac30366a1f705382658489bc8e24ee1a5",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff21cdb7441a98b04f1307f2a2eb4ba93ac30366a1f705382658489bc8e24ee1a50000000000000000000000000000000000000000000000000000000000000000000000000001ff",
+        "serialized_len": 104
+      },
+      "expected_non_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000001",
+        "siblings_nonzero_deepest_first": [
+          "78baf55244feafff3c9a795c1b30758300dc38fdf98f7e83e71d9baf4da0e7d7"
+        ],
+        "serialized": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000178baf55244feafff3c9a795c1b30758300dc38fdf98f7e83e71d9baf4da0e7d7",
+        "serialized_len": 131
+      },
+      "note": "All path bits are 1; our node is RIGHT at every level, sibling zero32 on the LEFT."
+    },
+    {
+      "id": "SMT-004",
+      "purpose": "Shared-prefix insertions: K_A and K_D share 255 leading path bits, diverge at depth 255.",
+      "initial_state": {},
+      "operations": [
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": "01"
+        },
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000001",
+          "value": "02"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "0000000000000000000000000000000000000000000000000000000000000001": "02"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "0000000000000000000000000000000000000000000000000000000000000001": "85116c39d8e11951a5c4d53adf601843b2e36af25ab22148d33adcb4c0924be3"
+      },
+      "expected_root": "97d39420257ccac4d261b60a42f348d5d5d965a61b10ac3f5836e9f1648a6145",
+      "expected_branch_hashes": {
+        "leaf_hash_K_A": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "leaf_hash_K_D": "85116c39d8e11951a5c4d53adf601843b2e36af25ab22148d33adcb4c0924be3",
+        "divergence_node_depth_255": "d00917837c004d2996c9055689d95f2d37146293f0cea37d6d33748795e951f0",
+        "node_at_depth_254": "5b427a1be3d54241ed1d0630280af19edf08600937cd50ef9906e8f8f80f521e",
+        "node_at_depth_1": "cb2ca71f7f7db884105d86411c62875a4b3fdfdabaf9905ebb96c3199f519eae",
+        "node_at_depth_0": "97d39420257ccac4d261b60a42f348d5d5d965a61b10ac3f5836e9f1648a6145"
+      },
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "01",
+        "leaf_hash": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "sibling_bitmap": "8000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [
+          "85116c39d8e11951a5c4d53adf601843b2e36af25ab22148d33adcb4c0924be3"
+        ],
+        "serialized": "010000000000000000000000000000000000000000000000000000000000000000aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c8000000000000000000000000000000000000000000000000000000000000000000185116c39d8e11951a5c4d53adf601843b2e36af25ab22148d33adcb4c0924be30000000101",
+        "serialized_len": 136
+      },
+      "expected_non_inclusion_proof": {
+        "key": "4000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000002",
+        "siblings_nonzero_deepest_first": [
+          "c57a192c8f4f270d61600f5c419d7ca29a01c6be445b65a4d5ba5e90703ab68f"
+        ],
+        "serialized": "004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000020001c57a192c8f4f270d61600f5c419d7ca29a01c6be445b65a4d5ba5e90703ab68f",
+        "serialized_len": 131
+      },
+      "note": "Only at depth 255 do the paths split; above that a single combined subtree climbs with zero32 siblings."
+    },
+    {
+      "id": "SMT-005",
+      "purpose": "Update existing key to a new value; root MUST change.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01"
+      },
+      "operations": [
+        {
+          "op": "update",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": "09"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "09"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "2c2ecc2ecc772a1d688f0fef1f4842b623f920a8785c5d57572fff93ea9a887e"
+      },
+      "expected_root": "64b62661185d33ccad03f78bc6357093ad0cdc9dba443198bd3d4388b6d0ce84",
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "09",
+        "leaf_hash": "2c2ecc2ecc772a1d688f0fef1f4842b623f920a8785c5d57572fff93ea9a887e",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "0100000000000000000000000000000000000000000000000000000000000000002c2ecc2ecc772a1d688f0fef1f4842b623f920a8785c5d57572fff93ea9a887e000000000000000000000000000000000000000000000000000000000000000000000000000109",
+        "serialized_len": 104
+      },
+      "root_before": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+      "note": "New leaf hash H(key||0x09) differs from H(key||0x01); root changes."
+    },
+    {
+      "id": "SMT-006",
+      "purpose": "Update existing key to the identical value; root MUST be unchanged.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01"
+      },
+      "operations": [
+        {
+          "op": "update",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": "01"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c"
+      },
+      "expected_root": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "01",
+        "leaf_hash": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "010000000000000000000000000000000000000000000000000000000000000000aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c000000000000000000000000000000000000000000000000000000000000000000000000000101",
+        "serialized_len": 104
+      },
+      "root_before": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+      "note": "Identical leaf hash; root identical to SMT-002 root."
+    },
+    {
+      "id": "SMT-007",
+      "purpose": "Delete an existing key via EMPTY sentinel; resulting root equals the tree without that key.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "operations": [
+        {
+          "op": "delete",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "resulting_state": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "expected_leaf_hashes": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874"
+      },
+      "expected_root": "bcb2ad59bde2b70739a5f9e2b5cc56c3e7beac5f12cf5c5e8d4ce73edc3373ec",
+      "expected_inclusion_proof": {
+        "key": "8000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "02",
+        "leaf_hash": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "018000000000000000000000000000000000000000000000000000000000000000d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874000000000000000000000000000000000000000000000000000000000000000000000000000102",
+        "serialized_len": 104
+      },
+      "expected_non_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000001",
+        "siblings_nonzero_deepest_first": [
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5",
+        "serialized_len": 131
+      },
+      "root_before": "f2be91b5f9f41614e8125886dc74b906a849fe566a3be27468bcb78bd1e45621",
+      "note": "After deletion K_A is ABSENT (non-inclusion). Root equals compute_root({K_B})."
+    },
+    {
+      "id": "SMT-008",
+      "purpose": "Delete a key that is absent; root MUST be unchanged (well-formed no-op).",
+      "initial_state": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "operations": [
+        {
+          "op": "delete",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "resulting_state": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "expected_leaf_hashes": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874"
+      },
+      "expected_root": "bcb2ad59bde2b70739a5f9e2b5cc56c3e7beac5f12cf5c5e8d4ce73edc3373ec",
+      "expected_non_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000001",
+        "siblings_nonzero_deepest_first": [
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010001ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5",
+        "serialized_len": 131
+      },
+      "root_before": "bcb2ad59bde2b70739a5f9e2b5cc56c3e7beac5f12cf5c5e8d4ce73edc3373ec",
+      "root_after": "bcb2ad59bde2b70739a5f9e2b5cc56c3e7beac5f12cf5c5e8d4ce73edc3373ec",
+      "note": "K_A was never present; deletion leaves the tree identical."
+    },
+    {
+      "id": "SMT-009",
+      "purpose": "Insert a key with an EMPTY (zero-length) PRESENT value.",
+      "initial_state": {},
+      "operations": [
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": ""
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": ""
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e"
+      },
+      "expected_root": "c037a1fe1f20bc59acc8dfa84e82e34fb5af2783220f23fb3045e687977f0017",
+      "expected_branch_hashes": {
+        "leaf_hash": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e"
+      },
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "",
+        "leaf_hash": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000000",
+        "siblings_nonzero_deepest_first": [],
+        "serialized": "0100000000000000000000000000000000000000000000000000000000000000009e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e0000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "serialized_len": 103
+      },
+      "note": "Leaf hash = SHA3-256(key || '') which is NOT zero32. Key is PRESENT with empty value."
+    },
+    {
+      "id": "SMT-010",
+      "purpose": "Present-empty value MUST yield a different root than the key being absent.",
+      "initial_state": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "operations": [
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": ""
+        }
+      ],
+      "resulting_state": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "0000000000000000000000000000000000000000000000000000000000000000": ""
+      },
+      "expected_leaf_hashes": {
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874",
+        "0000000000000000000000000000000000000000000000000000000000000000": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e"
+      },
+      "expected_root": "88e178412a34ac892115a574848cc55385ce8124474ff4b9dd49519a2dc747ed",
+      "expected_inclusion_proof": {
+        "key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "",
+        "leaf_hash": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000001",
+        "siblings_nonzero_deepest_first": [
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "0100000000000000000000000000000000000000000000000000000000000000009e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e00000000000000000000000000000000000000000000000000000000000000010001ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb500000000",
+        "serialized_len": 135
+      },
+      "root_absent": "bcb2ad59bde2b70739a5f9e2b5cc56c3e7beac5f12cf5c5e8d4ce73edc3373ec",
+      "root_present_empty": "88e178412a34ac892115a574848cc55385ce8124474ff4b9dd49519a2dc747ed",
+      "leaf_hash_present_empty": "9e6291970cb44dd94008c79bcaf9d86f18b4b49ba5b2a04781db7199ed3b9e4e",
+      "assert_distinct": true,
+      "note": "storage_len: absent=>-1, present-empty=>0 (Section 27.8). Roots differ."
+    },
+    {
+      "id": "SMT-011",
+      "purpose": "Inclusion proof for a key whose path passes a populated sibling subtree.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03"
+      },
+      "operations": [],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874",
+        "4000000000000000000000000000000000000000000000000000000000000000": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43"
+      },
+      "expected_root": "a3186b65547b09c5145f057b286173362ad052bbc27dc57a2fdd51be345805ec",
+      "expected_inclusion_proof": {
+        "key": "4000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "03",
+        "leaf_hash": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000003",
+        "siblings_nonzero_deepest_first": [
+          "22cd3a4c10f787dd7da20b472308f4d0b177974f4024571633778f5d679a66b0",
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "0140000000000000000000000000000000000000000000000000000000000000000a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc430000000000000000000000000000000000000000000000000000000000000003000222cd3a4c10f787dd7da20b472308f4d0b177974f4024571633778f5d679a66b0ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb50000000103",
+        "serialized_len": 168
+      },
+      "note": "K_C path: left at depth0 (shares with K_A), right at depth1. The depth0 sibling is the K_B subtree (non-zero); the depth1 left sibling is the K_A subtree (non-zero). Proof carries both."
+    },
+    {
+      "id": "SMT-012",
+      "purpose": "Non-inclusion proof for an absent key whose path traverses populated subtrees.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03"
+      },
+      "operations": [],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874",
+        "4000000000000000000000000000000000000000000000000000000000000000": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43"
+      },
+      "expected_root": "a3186b65547b09c5145f057b286173362ad052bbc27dc57a2fdd51be345805ec",
+      "expected_non_inclusion_proof": {
+        "key": "2000000000000000000000000000000000000000000000000000000000000000",
+        "present": false,
+        "value": null,
+        "leaf_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000007",
+        "siblings_nonzero_deepest_first": [
+          "72a952462ccd027b4c4275ac50d86ac7cff1a37816e1c1edf471d1c1dadba2f3",
+          "220f719871b7f4f8103346c33bb69c32efed9910eebdea2e60fe99e12ab8fc30",
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "00200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000007000372a952462ccd027b4c4275ac50d86ac7cff1a37816e1c1edf471d1c1dadba2f3220f719871b7f4f8103346c33bb69c32efed9910eebdea2e60fe99e12ab8fc30ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5",
+        "serialized_len": 195
+      },
+      "absent_key": "2000000000000000000000000000000000000000000000000000000000000000",
+      "note": "Absent key leaf field = zero32; verification climbs with the same sibling set and yields the tree root."
+    },
+    {
+      "id": "SMT-013",
+      "purpose": "Batch StateDiff (sorted ascending by key) applied atomically.",
+      "initial_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01"
+      },
+      "operations": [
+        {
+          "op": "apply_statediff_entry",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "new_value": "09"
+        },
+        {
+          "op": "apply_statediff_entry",
+          "key": "4000000000000000000000000000000000000000000000000000000000000000",
+          "new_value": "03"
+        },
+        {
+          "op": "apply_statediff_entry",
+          "key": "8000000000000000000000000000000000000000000000000000000000000000",
+          "new_value": "02"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "09",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "2c2ecc2ecc772a1d688f0fef1f4842b623f920a8785c5d57572fff93ea9a887e",
+        "4000000000000000000000000000000000000000000000000000000000000000": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43",
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874"
+      },
+      "expected_root": "da704972c62d74a0fc6273e99268d680d7f8506bb16f2402479a6949468f5986",
+      "expected_inclusion_proof": {
+        "key": "4000000000000000000000000000000000000000000000000000000000000000",
+        "present": true,
+        "value": "03",
+        "leaf_hash": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43",
+        "sibling_bitmap": "0000000000000000000000000000000000000000000000000000000000000003",
+        "siblings_nonzero_deepest_first": [
+          "12a5e307f94cd611d513b813e0ff6c628e6c19b9d680a7463e05890fe811d257",
+          "ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb5"
+        ],
+        "serialized": "0140000000000000000000000000000000000000000000000000000000000000000a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc430000000000000000000000000000000000000000000000000000000000000003000212a5e307f94cd611d513b813e0ff6c628e6c19b9d680a7463e05890fe811d257ab722de88fae7acdec91d1727e741d09773fcf5b8eb9ee0db74835ee498bedb50000000103",
+        "serialized_len": 168
+      },
+      "root_before": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+      "statediff_key_order": [
+        "0000000000000000000000000000000000000000000000000000000000000000",
+        "4000000000000000000000000000000000000000000000000000000000000000",
+        "8000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "note": "Entries MUST be applied in ascending key order; resulting root below."
+    },
+    {
+      "id": "SMT-014",
+      "purpose": "Incremental application root equals full recompute at every step.",
+      "initial_state": {},
+      "operations": [
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "value": "01"
+        },
+        {
+          "op": "insert",
+          "key": "8000000000000000000000000000000000000000000000000000000000000000",
+          "value": "02"
+        },
+        {
+          "op": "insert",
+          "key": "4000000000000000000000000000000000000000000000000000000000000000",
+          "value": "03"
+        },
+        {
+          "op": "insert",
+          "key": "0000000000000000000000000000000000000000000000000000000000000001",
+          "value": "04"
+        },
+        {
+          "op": "insert",
+          "key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "value": "05"
+        }
+      ],
+      "resulting_state": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "01",
+        "8000000000000000000000000000000000000000000000000000000000000000": "02",
+        "4000000000000000000000000000000000000000000000000000000000000000": "03",
+        "0000000000000000000000000000000000000000000000000000000000000001": "04",
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "05"
+      },
+      "expected_leaf_hashes": {
+        "0000000000000000000000000000000000000000000000000000000000000000": "aa206544e4e51017b313c228a4e8b42035bba61f8a8e87abd5e1135dc919fa7c",
+        "8000000000000000000000000000000000000000000000000000000000000000": "d09a3be6bb0b5a8c9c1c8bd21ea8c1a034a4863c8f65c018d3f631ece9c88874",
+        "4000000000000000000000000000000000000000000000000000000000000000": "0a5bc2ee1357fd54fb75780dc79dc1373732fb9b019a80859a16556a2636cc43",
+        "0000000000000000000000000000000000000000000000000000000000000001": "157e85aaa91838dd41fe580b9242b5eecf8aac33534e69c6e9cec4bc4ac09543",
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff": "6914aa4917f595ddba9ff4eb2b7bd872ba508cfe80d32adb361653c939292597"
+      },
+      "expected_root": "bd1c59ca3cf1fa78dcc2b2a2ab02665183fe9c295f33312f278c7e81c906f6d0",
+      "steps": [
+        {
+          "after_insert_key": "0000000000000000000000000000000000000000000000000000000000000000",
+          "incremental_root": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+          "full_recompute_root": "ba9eb050f7b20cec6adca83e4c1d75b4b626a2b3b5c8949535d18c1d5708b749",
+          "equal": true
+        },
+        {
+          "after_insert_key": "8000000000000000000000000000000000000000000000000000000000000000",
+          "incremental_root": "f2be91b5f9f41614e8125886dc74b906a849fe566a3be27468bcb78bd1e45621",
+          "full_recompute_root": "f2be91b5f9f41614e8125886dc74b906a849fe566a3be27468bcb78bd1e45621",
+          "equal": true
+        },
+        {
+          "after_insert_key": "4000000000000000000000000000000000000000000000000000000000000000",
+          "incremental_root": "a3186b65547b09c5145f057b286173362ad052bbc27dc57a2fdd51be345805ec",
+          "full_recompute_root": "a3186b65547b09c5145f057b286173362ad052bbc27dc57a2fdd51be345805ec",
+          "equal": true
+        },
+        {
+          "after_insert_key": "0000000000000000000000000000000000000000000000000000000000000001",
+          "incremental_root": "eb26d100184e00b44e521baebe584c8f2593015f09a270f16f1b8c8b7356239b",
+          "full_recompute_root": "eb26d100184e00b44e521baebe584c8f2593015f09a270f16f1b8c8b7356239b",
+          "equal": true
+        },
+        {
+          "after_insert_key": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "incremental_root": "bd1c59ca3cf1fa78dcc2b2a2ab02665183fe9c295f33312f278c7e81c906f6d0",
+          "full_recompute_root": "bd1c59ca3cf1fa78dcc2b2a2ab02665183fe9c295f33312f278c7e81c906f6d0",
+          "equal": true
+        }
+      ],
+      "all_equal": true,
+      "note": "At each insert, incremental root MUST equal a from-scratch recompute over the accumulated set."
+    }
+  ]
+}
