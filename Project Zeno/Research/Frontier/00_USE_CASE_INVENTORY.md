@@ -186,7 +186,7 @@ Frontier is for boundary testing and hard limits, not for documenting Phase 1 sp
 
 ---
 
-## F. Open Questions for DS
+## F. Open Questions for Domain Settlement Implementation
 
 Listed in priority order based on how many Frontier documents they gate.
 
