@@ -1,7 +1,7 @@
 ## Zenon Taproot Puzzle — On-Chain Artifact Reference
 
-**Status:** Unsolved  
-**Since:** November 14, 2021 (Taproot Activation)  
+**Status:** SOLVED 
+**Since:** August 1, 2026   
 **Network:** Bitcoin Mainnet  
 **Block Height:** 709,632  
 
